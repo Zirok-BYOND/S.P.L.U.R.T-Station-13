@@ -48,6 +48,16 @@
 	full_name = "Subtle Emote"
 	clientside = "subtle"
 
+/datum/keybinding/client/communication/subtle_with_indicator
+	hotkey_keys = list("Ctrl5")
+	name = "subtle_with_indicator"
+	full_name = "Subtle with Typing Indicator"
+
+/datum/keybinding/client/communication/subtle_with_indicator/down(client/user)
+	var/mob/M = user.mob
+	M.subtle_typing_indicator()
+	return TRUE
+
 /datum/keybinding/client/communication/subtler
 	hotkey_keys = list("6")
 	name = "Subtler"

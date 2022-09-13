@@ -14,6 +14,11 @@
 		return M.get_top_level_mob()
 	return S
 
+//If the message passed to the emote matches this specific strings we apply typing indicators. Otherwise we don't.
+//This was sadly needed because I cannot think of a simpler way(other than a var on /mob/living) to communicate
+// to the emote code if we want typing indicators or not.
+#define MAGIC_INDICATOR_STRING "flznmvciwzdhgiewlsfofd"
+
 ///////////////// EMOTE CODE
 // Maybe making this as an emote is less messy?
 // It was - ktccd
@@ -30,14 +35,19 @@
 	return FALSE
 
 /datum/emote/living/subtle/run_emote(mob/user, params, type_override = null)
+	var/using_indicators = (params && params == MAGIC_INDICATOR_STRING)
 	if(jobban_isbanned(user, "emote"))
 		to_chat(user, "You cannot send subtle emotes (banned).")
 		return FALSE
 	else if(user.client && user.client.prefs.muted & MUTE_IC)
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
-	else if(!params)
+	else if(!params || using_indicators)
+		if(using_indicators)
+			user.display_typing_indicator()
 		var/subtle_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Subtle", null, MAX_MESSAGE_LEN)
+		if(using_indicators)
+			user.clear_typing_indicator()
 		if(subtle_emote && !check_invalid(user, subtle_emote))
 			message = subtle_emote
 		else
@@ -158,6 +168,15 @@
 		M.show_message(message)
 
 ///////////////// VERB CODE
+
+/mob/verb/subtle_typing_indicator()
+	set name = "Subtle_with_indicator"
+	set category = "IC"
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+	usr.emote("subtle", message = MAGIC_INDICATOR_STRING)
+
 /mob/living/verb/subtle()
 	set name = "Subtle"
 	set category = "IC"
