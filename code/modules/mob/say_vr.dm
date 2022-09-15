@@ -165,7 +165,7 @@
 
 ///////////////// VERB CODE
 
-/mob/verb/subtle_typing_indicator()
+/mob/living/verb/subtle_typing_indicator()
 	set name = "Subtle_with_indicator"
 	set category = "IC"
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
