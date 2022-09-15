@@ -55,7 +55,7 @@
 
 /datum/keybinding/client/communication/subtle_with_indicator/down(client/user)
 	var/mob/M = user.mob
-	M.subtle_typing_indicator()
+	M.subtle_with_indicator()
 	return TRUE
 
 /datum/keybinding/client/communication/subtler
