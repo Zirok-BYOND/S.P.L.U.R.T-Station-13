@@ -35,6 +35,7 @@
 	return FALSE
 
 /datum/emote/living/subtle/run_emote(mob/user, params, type_override = null)
+	//We use indicators if the message matches the indicator, normally supplied by subtle verbs.
 	var/using_indicators = (params && params == MAGIC_INDICATOR_STRING)
 	if(jobban_isbanned(user, "emote"))
 		to_chat(user, "You cannot send subtle emotes (banned).")
@@ -46,8 +47,8 @@
 		if(using_indicators)
 			user.display_typing_indicator()
 		var/subtle_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Subtle", null, MAX_MESSAGE_LEN)
-		if(using_indicators)
-			user.clear_typing_indicator()
+		//We might as well clear indicators regardless, unnecessary clears should not be a problem, and help with stuck indicators.
+		user.clear_typing_indicator()
 		if(subtle_emote && !check_invalid(user, subtle_emote))
 			message = subtle_emote
 		else
