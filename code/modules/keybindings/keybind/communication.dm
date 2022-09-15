@@ -43,13 +43,13 @@
 	return TRUE
 
 /datum/keybinding/client/communication/subtle
-	hotkey_keys = list("5")
+	hotkey_keys = list("Ctrl5")
 	name = "Subtle"
 	full_name = "Subtle Emote"
 	clientside = "subtle"
 
 /datum/keybinding/client/communication/subtle_with_indicator
-	hotkey_keys = list("Ctrl5")
+	hotkey_keys = list("5")
 	name = "subtle_with_indicator"
 	full_name = "Subtle with Typing Indicator"
 
