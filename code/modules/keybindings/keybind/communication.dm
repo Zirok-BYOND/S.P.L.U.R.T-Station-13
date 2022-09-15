@@ -54,7 +54,7 @@
 	full_name = "Subtle with Typing Indicator"
 
 /datum/keybinding/client/communication/subtle_with_indicator/down(client/user)
-	var/mob/M = user.mob
+	var/mob/living/M = user.mob
 	M.subtle_with_indicator()
 	return TRUE
 
