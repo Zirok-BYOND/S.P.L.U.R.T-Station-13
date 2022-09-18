@@ -1,5 +1,7 @@
 /// this is bad code
 /mob/living/silicon/robot/update_icons()
+	var/typing_indicator_backup = typing_indicator_current //SPLURT EDIT
+
 	cut_overlays()
 	icon_state = module.cyborg_base_icon
 	//Citadel changes start here - Allows modules to use different icon files, and allows modules to specify a pixel offset
@@ -63,3 +65,7 @@
 			icon_state = "[module.cyborg_base_icon]"
 
 	SEND_SIGNAL(src, COMSIG_ROBOT_UPDATE_ICONS)
+
+	//SPLURT EDITS
+	if(typing_indicator_backup)
+		add_overlay(typing_indicator_backup)
